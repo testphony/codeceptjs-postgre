@@ -1,0 +1,25 @@
+{
+  "name": "codeceptjs-postgre",
+  "version": "0.0.1",
+  "description": "CodeceptJS helper for PostgreSQL",
+  "dependencies": {
+    "camelcase-keys": "^4.2.0",
+    "pg": "^7.4.3",
+    "requireg": "^0.1.8"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:APshenkin/codeceptjs-postgre.git"
+  },
+  "author": "Andrey Pshenkin <andrey.pshenkin@gmail.com>",
+  "license": "MIT"
+}
