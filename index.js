@@ -2,6 +2,7 @@
 const requireg = require('requireg');
 const assert = require('assert');
 const camelcaseKeys = require('camelcase-keys');
+const pgNamed = require('node-postgres-named');
 
 let PGClient;
 
@@ -95,6 +96,7 @@ class Postgre extends Helper {
           password: this.options.dbs[dbName].password,
           port: this.options.dbs[dbName].port,
         });
+        pgNamed.patch(this.connections[dbName]);
         return this.connections[dbName].connect();
       }
       throw new Error(`There is no user or password for DB ${dbName} in config`);
@@ -105,12 +107,13 @@ class Postgre extends Helper {
   /**
    * Совершает запрос в базу.
    * @param {string} query
+   * @param [object] params
    * @param {string} dbName
    * @returns {Promise<*>}
    */
-  query(query, dbName) {
+  query(query, params = {}, dbName) {
     if (this.connections[dbName]) {
-      return this.connections[dbName].query(query)
+      return this.connections[dbName].query(query, params)
         .then((res) => {
           if (res.command === 'SELECT') {
             return camelcaseKeys(res.rows);
@@ -120,7 +123,7 @@ class Postgre extends Helper {
         .catch(err => assert.fail(err));
     }
     return this._openConnect(dbName)
-      .then(() => this.connections[dbName].query(query)
+      .then(() => this.connections[dbName].query(query, params)
         .then((res) => {
           if (res.command === 'SELECT') {
             return camelcaseKeys(res.rows);
