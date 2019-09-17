@@ -1,6 +1,6 @@
 {
   "name": "codeceptjs-postgre",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CodeceptJS helper for PostgreSQL",
   "dependencies": {
     "camelcase-keys": "^4.2.0",
