@@ -1,4 +1,3 @@
-
 const requireg = require('requireg');
 const assert = require('assert');
 const camelcaseKeys = require('camelcase-keys');
@@ -7,7 +6,7 @@ const pgNamed = require('node-postgres-named');
 let PGClient;
 
 /**
- * Хэлпер для работы с базой mysql.
+ * Helper to work with Postgres
  */
 class Postgre extends Helper {
   /**
@@ -80,14 +79,14 @@ class Postgre extends Helper {
   }
 
   /**
-   * Открывает коннект к базе.
+   * Open connect to db
    * @param {string} dbName
    * @returns {Promise<*>}
    * @private
    */
   _openConnect(dbName) {
     if (this.options.dbs[dbName]) {
-      this.options.dbs[dbName] = Object.assign({}, this.options.default, this.options.dbs[dbName]);
+      this.options.dbs[dbName] = { ...this.options.default, ...this.options.dbs[dbName] };
       if (typeof this.options.dbs[dbName].user === 'string' && typeof this.options.dbs[dbName].password === 'string') {
         this.connections[dbName] = new PGClient({
           user: this.options.dbs[dbName].user,
@@ -105,9 +104,9 @@ class Postgre extends Helper {
   }
 
   /**
-   * Совершает запрос в базу.
+   * Run query
    * @param {string} query
-   * @param [object] params
+   * @param [{ [key: string]: any }] params
    * @param {string} dbName
    * @returns {Promise<*>}
    */
@@ -118,9 +117,12 @@ class Postgre extends Helper {
           if (res.command === 'SELECT') {
             return camelcaseKeys(res.rows);
           }
+          if (typeof res.rows !== 'undefined') {
+            res.rows = camelcaseKeys(res.rows)
+          }
           return camelcaseKeys(res);
         })
-        .catch(err => assert.fail(err));
+        .catch((err) => assert.fail(err));
     }
     return this._openConnect(dbName)
       .then(() => this.connections[dbName].query(query, params)
@@ -128,9 +130,12 @@ class Postgre extends Helper {
           if (res.command === 'SELECT') {
             return camelcaseKeys(res.rows);
           }
+          if (typeof res.rows !== 'undefined') {
+            res.rows = camelcaseKeys(res.rows)
+          }
           return camelcaseKeys(res);
         })
-        .catch(err => assert.fail(err)));
+        .catch((err) => assert.fail(err)));
   }
 
   /**

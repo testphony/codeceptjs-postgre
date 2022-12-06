@@ -1,19 +1,20 @@
 {
   "name": "codeceptjs-postgre",
-  "version": "0.0.4",
+  "version": "0.0.7",
   "description": "CodeceptJS helper for PostgreSQL",
   "dependencies": {
-    "camelcase-keys": "^4.2.0",
-    "pg": "^7.4.3",
+    "camelcase-keys": "^6.2.2",
+    "pg": "^8.5.1",
     "node-postgres-named": "^2.4.1",
-    "requireg": "^0.1.8"
+    "requireg": "^0.2.2"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.17.3"
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1"
   },
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "lint": "eslint ."
   },
